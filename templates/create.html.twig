@@ -1,0 +1,40 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Kapcsolatfelvétel
+{% endblock %}
+
+{% block body %}
+    <div class="body-content">
+        <div class="form-container">
+
+            {% if form is defined %}
+                
+                <h1>Kapcsolatfelvétel</h1>
+
+                {{ form_errors(form) }}
+
+                {% for msg in app.flashes('success') %}
+                    <div class="alert alert-success">{{ msg }}</div>
+                {% endfor %}
+
+                {% for msg in app.flashes('error') %}
+                    <div class="alert alert-danger">{{ msg }}</div>
+                {% endfor %}
+
+                {{ form(form) }}
+
+            {% else %}
+
+                <div class="alert alert-danger" style="margin: 0">
+                    Hiba:
+                    {% if error is defined %}
+                        {{ error }}
+                    {% endif %}
+                </div>
+
+            {% endif %}
+
+        </div>
+    </div>
+{% endblock %}

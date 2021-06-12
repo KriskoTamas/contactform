@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use App\Form\PostType;
 use App\Repository\PostRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,16 +39,36 @@ class PostController extends AbstractController
      */
     public function create(Request $request) // create a new post
     {
-        $post = new Post();
+        try {
+            $post = new Post();
+            
+            $form = $this->createForm(PostType::class, $post);
+    
+            $form->handleRequest($request);
+            
+            if ($form->isSubmitted()) {
+                if($post->getName() == "" || $post->getEmail() == "" || $post->getMessage() == ""){
+                    $this->addFlash(
+                        'error',
+                        'Hiba! Kérlek töltsd ki az összes mezőt!'
+                    );
+                }
+                else{ // $form->isValid()
+                    $em = $this->getDoctrine()->getManager(); // entity manager
+                    
+                    $em->persist($post);
+                    $em->flush();
+        
+                    $this->addFlash(
+                       'success',
+                       'Köszönjük szépen a kérdésedet.'
+                    );
+                }
+            }
+            return $this->render('create.html.twig', ['form' => $form->createView()]);
+        } catch (\Exception $th) {
+            return $this->render('create.html.twig', ['error' => $th->getMessage()]);
+        }
 
-        $post->setTitle("This is the title I was looking for.");
-
-        $em = $this->getDoctrine()->getManager(); // entity manager
-
-        $em->persist($post);
-
-        $em->flush();
-
-        return new Response("Post has been created!");
     }
 }

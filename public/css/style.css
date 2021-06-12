@@ -30,3 +30,14 @@ html, body{
 .form-container input, .form-container textarea{
     margin-bottom: 12px;
 }
+
+.container{
+    width: 90%;
+    max-width: 900px;
+    margin: auto;
+    margin-top: 30px;
+}
+
+#table-data{
+    margin-top: 30px;
+}

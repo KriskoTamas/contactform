@@ -50,7 +50,7 @@ class PostController extends AbstractController
                 if($post->getName() == "" || $post->getEmail() == "" || $post->getMessage() == ""){
                     $this->addFlash(
                         'error',
-                        'Hiba! Kérlek töltsd ki az összes mezőt!'
+                        'Hiba! Kérjük töltsd ki az összes mezőt!'
                     );
                 }
                 else{ // $form->isValid()
@@ -61,7 +61,7 @@ class PostController extends AbstractController
         
                     $this->addFlash(
                        'success',
-                       'Köszönjük szépen a kérdésedet.'
+                       'Köszönjük szépen a kérdésedet. Válaszunkkal hamarosan keresünk a megadott e-mail címen.'
                     );
                 }
             }
